@@ -31,6 +31,7 @@ jobs:
           file: Dockerfile
           platforms: linux/arm/v7
           push: false
+          load: true
           tags: arm32-hello:latest
 
       # Optional: Save the image as a tarball artifact
