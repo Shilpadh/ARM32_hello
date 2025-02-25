@@ -1,5 +1,5 @@
 # Build stage: use an ARM32 Ubuntu image and install the cross-compiler.
-FROM arm32v7/ubuntu:latest AS builder
+FROM arm32v7/ubuntu:22.04 AS builder
 
 RUN apt-get update && \
     apt-get install -y gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf && \
