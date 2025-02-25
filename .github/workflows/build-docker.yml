@@ -1,4 +1,4 @@
-name: Build Docker Container for Arm32
+name: Build ARM32 Docker Image
 
 on:
   push:
@@ -11,17 +11,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Checkout the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Build Docker image
-        run: docker build -t arm32-hello .
+      # Set up QEMU for cross-platform builds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Build the Docker image for ARM32 (linux/arm/v7)
+      - name: Build ARM32 image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile
+          platforms: linux/arm/v7
+          push: false
+          tags: arm32-hello:latest
+
+      # Optional: Save the image as a tarball artifact
       - name: Save Docker image as tarball
-        run: docker save arm32-hello -o arm32-hello.tar
+        run: docker save arm32-hello:latest -o arm32-hello.tar
 
       - name: Upload Docker image artifact
         uses: actions/upload-artifact@v4
         with:
           name: arm32-hello-image
           path: arm32-hello.tar
+
