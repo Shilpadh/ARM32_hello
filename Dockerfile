@@ -2,7 +2,7 @@
 FROM arm32v7/ubuntu:latest AS builder
 
 RUN apt-get update && \
-    apt-get install -y gcc-arm-linux-gnueabihf && \
+    apt-get install -y gcc-arm-linux-gnueabihf binutils-arm-linux-gnueabihf && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
